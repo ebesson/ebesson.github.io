@@ -1,5 +1,7 @@
 = Configurer son outil de merge / diff avec Git
 
+:hp-tags: outil, git
+
 Lorsque que l'on travaille avec Git, on souvent est amené à faire des diffs sur un fichier ou résoudre des confilts lors d'un merge, le recours à outil graphique est bien pratique. L'outil Meld remplit parfaitement ces fonctions.
 
 Voici la procédure pour l'installer :
