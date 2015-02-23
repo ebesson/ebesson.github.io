@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Configurer son outil de merge / diff avec Git</title>
+    <meta name="description" content="" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="http://ebesson.github.io/themes/Casper/favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="http://ebesson.github.io/themes/Casper/assets/css/screen.css?v=1.0.0" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+
+    <link rel="canonical" href="http://ebesson.github.io/2015/02/23/Configurer-son-outil-de-merge-diff-avec-Git.html" />
+    
+    <meta property="og:site_name" content="" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Configurer son outil de merge / diff avec Git" />
+    <meta property="og:description" content="Lorsque que l&amp;#8217;on travaille avec Git, on souvent est amené à faire des diffs sur un fichier ou résoudre des confilts lors d&amp;#8217;un merge, le recours à outil graphique est bien pratique. L&amp;#8217;outil Meld..." />
+    <meta property="og:url" content="http://ebesson.github.io/2015/02/23/Configurer-son-outil-de-merge-diff-avec-Git.html" />
+    <meta property="article:published_time" content="2015-02-22T23:00:00.000Z" />
+    <meta property="article:modified_time" content="2015-02-23T12:36:02.400Z" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Configurer son outil de merge / diff avec Git" />
+    <meta name="twitter:description" content="Lorsque que l&amp;#8217;on travaille avec Git, on souvent est amené à faire des diffs sur un fichier ou résoudre des confilts lors d&amp;#8217;un merge, le recours à outil graphique est bien pratique. L&amp;#8217;outil Meld..." />
+    <meta name="twitter:url" content="http://ebesson.github.io/2015/02/23/Configurer-son-outil-de-merge-diff-avec-Git.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "",
+    "author": {
+        "@type": "Person",
+        "name": "ebesson",
+        "image": "https://avatars.githubusercontent.com/u/2185657?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": null
+    },
+    "headline": "Configurer son outil de merge / diff avec Git",
+    "url": "http://ebesson.github.io/2015/02/23/Configurer-son-outil-de-merge-diff-avec-Git.html",
+    "datePublished": "2015-02-22T23:00:00.000Z",
+    "dateModified": "2015-02-23T12:36:02.400Z",
+    "description": "Lorsque que l&amp;#8217;on travaille avec Git, on souvent est amené à faire des diffs sur un fichier ou résoudre des confilts lors d&amp;#8217;un merge, le recours à outil graphique est bien pratique. L&amp;#8217;outil Meld..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="" href="http://ebesson.github.io/rss" />
+</head>
+<body class="post-template">
+
+    
+
+
+<header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        <a class="back-button icon-arrow-left" href="http://ebesson.github.io">Home</a>
+        <a class="subscribe-button icon-feed" href="http://ebesson.github.io/rss/">Subscribe</a>
+    </nav>
+</header>
+
+<main class="content" role="main">
+
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">Configurer son outil de merge / diff avec Git</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2015-02-23">23 February 2015</time> 
+            </section>
+        </header>
+
+        <section class="post-content">
+            <div class="paragraph">
+<p>Lorsque que l&#8217;on travaille avec Git, on souvent est amené à faire des diffs sur un fichier ou résoudre des confilts lors d&#8217;un merge, le recours à outil graphique est bien pratique. L&#8217;outil Meld remplit parfaitement ces fonctions.</p>
+</div>
+<div class="paragraph">
+<p>Voici la procédure pour l&#8217;installer :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-shell" data-lang="shell">sudo apt-get install meld</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Créer dans votre home un fichier nommé diff.py avec le contenu suivant :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">#!/usr/bin/python
+
+import sys
+import os
+
+os.system('meld "%s" "%s"' % (sys.argv[2], sys.argv[5]))
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Il ne reste plus qu'à configurer Git pour l&#8217;utiliser.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-shell" data-lang="shell">git config --global diff.external /chemin/vers/diff.py</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Lorsque de l'éxécution de commande "git diff monFichier", si le fichier contient des modifications Meld s&#8217;ouvira. Pour utiliser Meld lors d&#8217;un merge, lancer la commande "git mergetool".</p>
+</div>
+        </section>
+
+        <footer class="post-footer">
+
+
+            <figure class="author-image">
+                <a class="img" href="" style="background-image: url(https://avatars.githubusercontent.com/u/2185657?v=3)"><span class="hidden">ebesson's Picture</span></a>
+            </figure>
+
+            <section class="author">
+                <h4><a href="">ebesson</a></h4>
+
+                    <p>Read <a href="">more posts</a> by this author.</p>
+                <div class="author-meta">
+                    
+                    
+                </div>
+            </section>
+
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="https://twitter.com/share?text=Configurer%20son%20outil%20de%20merge%20%2F%20diff%20avec%20Git&amp;url=http://ebesson.github.io/2015/02/23/Configurer-son-outil-de-merge-diff-avec-Git.html"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://ebesson.github.io/2015/02/23/Configurer-son-outil-de-merge-diff-avec-Git.html"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://ebesson.github.io/2015/02/23/Configurer-son-outil-de-merge-diff-avec-Git.html"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+
+        </footer>
+
+
+    </article>
+
+</main>
+
+
+
+    <footer class="site-footer clearfix">
+        <section class="copyright"><a href="http://ebesson.github.io"></a> &copy; 2015</section>
+        <section class="poweredby">Proudly published with <a href="http://hubpress.io">HubPress</a></section>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script>
+
+    <script type="text/javascript" src="http://ebesson.github.io/themes/Casper/assets/js/jquery.fitvids.js?v=1.0.0"></script>
+    <script type="text/javascript" src="http://ebesson.github.io/themes/Casper/assets/js/index.js?v=1.0.0"></script>
+
+</body>
+</html>
